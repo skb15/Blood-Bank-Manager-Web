@@ -4,6 +4,7 @@
     <router-link to="/about">About</router-link>
   </nav>
   <router-view />
+  <hello-world></hello-world>
 </template>
 
 <style lang="scss">
