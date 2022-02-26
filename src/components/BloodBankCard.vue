@@ -1,13 +1,13 @@
 <template>
-  <div class="wrapper p-4 rounded-lg m-4">
-    <div class="tags">
-      <span>Private</span>
-      <span>Verfied</span>
+  <div class="wrapper p-4 rounded-lg m-4 border-2 border-slate-400/70">
+    <div class="tags flex gap-2">
+      <span class="py-1 px-2 border-2 border-red-500 text-red-500 font-semibold rounded-md uppercase">Private</span>
+      <span class="py-1 px-2 border-2 border-red-500 text-red-500 font-semibold rounded-md uppercase">Verfied</span>
     </div>
     <span class="update">Last Updated: {{ lastUpdate }}</span>
     <div class="info">
-      <h1 class="text-3xl font-bold">{{ name }}</h1>
-      <h3>{{ address }}, {{ pincode }}</h3>
+      <h1 class="text-3xl font-bold my-3">{{ name }}</h1>
+      <h3 class="text-lg">{{ address }}, {{ pincode }}</h3>
     </div>
     <button
       @click="getDirection"
@@ -15,8 +15,8 @@
         px-4
         py-2
         font-semibold
-        bg-blue-500
-        hover:bg-blue-600
+        bg-red-500
+        hover:bg-red-600
         text-white
         rounded-lg
         shadow-md
@@ -25,43 +25,23 @@
     >
       Get Direction
     </button>
-    <p v-show="isShow">{{ address }}</p>
-
-    <section class="supplies">
-      <h4>Available Supplies</h4>
-      <ul>
-        <li>
-          <span class="group">A+</span
-          ><span class="unit">{{ stock.A["+"] }}</span>
+    <section class="supplies border-t-2 border-dashed border-black/30 mt-4">
+      <h4 class="font-bold text-lg my-2">Available Supplies</h4>
+      <ul class="mt-2 flex gap-4">
+        <li class="text-xl flex flex-col" v-for="stock in stocks" :key="stock.type">
+          <h4 class="p-auto font-bold border-2 text-center rounded-md mb-2">{{stock.type}}</h4>
+          <div class="flex gap-2">
+            <div class="bg-red-100 px-6 py-4 rounded-md flex flex-col items-center">
+              <span class="text-red-500 font-bold">+</span>
+              <span class="unit">{{ stock.units["+"] }}</span>
+            </div>
+            <div class="bg-red-100 px-6 py-4 rounded-md flex flex-col items-center">
+              <span class="text-red-500 font-bold">-</span>
+              <span class="unit">{{ stock.units["-"] }}</span>
+            </div>
+          </div>
         </li>
-        <li>
-          <span class="group">A-</span
-          ><span class="unit">{{ stock.A["-"] }}</span>
-        </li>
-        <li>
-          <span class="group">B+</span
-          ><span class="unit">{{ stock.B["+"] }}</span>
-        </li>
-        <li>
-          <span class="group">B-</span
-          ><span class="unit">{{ stock.B["-"] }}</span>
-        </li>
-        <li>
-          <span class="group">AB+</span
-          ><span class="unit">{{ stock.AB["+"] }}</span>
-        </li>
-        <li>
-          <span class="group">AB-</span
-          ><span class="unit">{{ stock.AB["-"] }}</span>
-        </li>
-        <li>
-          <span class="group">O+</span
-          ><span class="unit">{{ stock.O["+"] }}</span>
-        </li>
-        <li>
-          <span class="group">O-</span
-          ><span class="unit">{{ stock.O["-"] }}</span>
-        </li>
+        
       </ul>
     </section>
   </div>
@@ -78,12 +58,12 @@ export default defineComponent({
       name: "Subhashgram General Hospital",
       address: "Subhasgram, Kolkata, West Bengal",
       pincode: 700147,
-      stock: {
-        A: { "+": 23, "-": 12 },
-        B: { "+": 3, "-": 19 },
-        AB: { "+": 13, "-": 72 },
-        O: { "+": 83, "-": 2 },
-      },
+      stocks: [
+        {type: "A", units:{ "+": 23, "-": 12 }},
+        {type: "B", units:{ "+": 3, "-": 1 }},
+        {type: "AB", units:{ "+": 123, "-": 2 }},
+        {type: "O", units:{ "+": 28, "-": 0 }},
+      ],
       lastUpdate: new Date(),
     };
   },
@@ -98,25 +78,11 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .wrapper {
-  // padding: 1em 1em;
-  // border-radius: 0.6rem;
-  // background-color: red;
   display: grid;
   grid-template-rows: repeat(3, auto);
-  border: 1px solid #707070;
 
   .tags {
     grid-row: 1 / span 1;
-    display: flex;
-    gap: 0.6em;
-    span {
-      padding: 0.2em 0.5em;
-      border: 3px solid #f44336;
-      color: #f44336;
-      font-weight: 500;
-      border-radius: 0.3em;
-      text-transform: uppercase;
-    }
   }
 
   .update {
@@ -129,16 +95,6 @@ export default defineComponent({
 
   .supplies {
     grid-row: 3 / span 1;
-    ul {
-      display: flex;
-      gap: 1rem;
-      list-style: none;
-
-      li {
-        display: flex;
-        flex-direction: column;
-      }
-    }
   }
 }
 </style>
