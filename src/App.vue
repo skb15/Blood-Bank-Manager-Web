@@ -1,5 +1,6 @@
 <template>
-  <BloodBankCard />
+  <BloodBankCard :info="banks[0]"/>
+  <BloodBankCard :info="banks[1]"/>
 </template>
 
 <script lang="ts">
@@ -11,6 +12,33 @@ export default defineComponent({
   components: {
     BloodBankCard,
   },
+  data(){return{banks:[{
+      tags: ["govt", "verified"],
+      name: "Subhashgram General Hospital",
+      address: "Subhasgram, Kolkata, West Bengal",
+      pincode: 700147,
+      stocks: {
+        A:{ "+": 23, "-": 12 },
+        B:{ "+": 3, "-": 1 },
+        AB:{ "+": 123, "-": 2 },
+        O:{ "+": 28, "-": 0 },
+      },
+      lastUpdateDate: new Date(2022,1,27,18,28),
+    },
+    {
+      tags: ["govt", "verified"],
+      name: "Baruipur Hospital",
+      address: "Subhasgram, Kolkata, West Bengal",
+      pincode: 700147,
+      stocks: {
+        A:{ "+": 23, "-": 12 },
+        B:{ "+": 3, "-": 1 },
+        AB:{ "+": 123, "-": 2 },
+        O:{ "+": 28, "-": 0 },
+      },
+      lastUpdateDate: new Date(2022,1,27,18,28),
+    },]}}
+    
 });
 </script>
 
