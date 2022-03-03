@@ -1,6 +1,8 @@
 <template>
-  <BloodBankCard :info="banks[0]"/>
-  <BloodBankCard :info="banks[1]"/>
+  <div class="flex flex-col gap-8 w-screen max-w-fit mx-auto">
+    <BloodBankCard :info="banks[0]"/>
+    <BloodBankCard :info="banks[1]"/>
+  </div>
 </template>
 
 <script lang="ts">
