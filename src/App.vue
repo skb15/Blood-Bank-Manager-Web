@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col gap-8 w-screen max-w-fit mx-auto">
-    <BloodBankCard :info="banks[0]"/>
-    <BloodBankCard :info="banks[1]"/>
+    <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
   </div>
 </template>
 
@@ -14,33 +13,54 @@ export default defineComponent({
   components: {
     BloodBankCard,
   },
-  data(){return{banks:[{
-      tags: ["govt", "verified"],
-      name: "Subhashgram General Hospital",
-      address: "Subhasgram, Kolkata, West Bengal",
-      pincode: 700147,
-      stocks: {
-        A:{ "+": 23, "-": 12 },
-        B:{ "+": 3, "-": 1 },
-        AB:{ "+": 123, "-": 2 },
-        O:{ "+": 28, "-": 0 },
-      },
-      lastUpdateDate: new Date(2022,1,27,18,28),
-    },
-    {
-      tags: ["govt", "verified"],
-      name: "Baruipur Hospital",
-      address: "Subhasgram, Kolkata, West Bengal",
-      pincode: 700147,
-      stocks: {
-        A:{ "+": 23, "-": 12 },
-        B:{ "+": 3, "-": 1 },
-        AB:{ "+": 123, "-": 2 },
-        O:{ "+": 28, "-": 0 },
-      },
-      lastUpdateDate: new Date(2022,1,27,18,28),
-    },]}}
-    
+  data() {
+    return {
+      banks: [
+        {
+          id: 2,
+          tags: ["govt", "verified"],
+          name: "Subhashgram General Hospital",
+          address: "Subhasgram, Kolkata, West Bengal",
+          pincode: 700147,
+          stocks: {
+            A: { "+": 23, "-": 12 },
+            B: { "+": 3, "-": 1 },
+            AB: { "+": 123, "-": 2 },
+            O: { "+": 28, "-": 0 },
+          },
+          lastUpdateDate: new Date(2022, 1, 27, 18, 28),
+        },
+        {
+          id: 3,
+          tags: ["govt", "verified"],
+          name: "Baruipur S D Hospital",
+          address: "Kulpi Road, Baruipur, Kolkata",
+          pincode: 700144,
+          stocks: {
+            A: { "+": 7, "-": 12 },
+            B: { "+": 0, "-": 0 },
+            AB: { "+": 17, "-": 9 },
+            O: { "+": 5, "-": 0 },
+          },
+          lastUpdateDate: new Date(2022, 2, 3, 6, 49),
+        },
+        {
+          id: 4,
+          tags: ["govt", "verified"],
+          name: "Ramakrishna Mission Seva Pratishthan(Sishu Mangal)",
+          address: "Sarat Bose Road, Hazra, Kalighat, Kolkata, West Bengal",
+          pincode: 700029,
+          stocks: {
+            A: { "+": 17, "-": 5 },
+            B: { "+": 13, "-": 0 },
+            AB: { "+": 5, "-": 0 },
+            O: { "+": 3, "-": 1 },
+          },
+          lastUpdateDate: new Date(2022, 2, 3, 8, 18),
+        },
+      ],
+    };
+  },
 });
 </script>
 
