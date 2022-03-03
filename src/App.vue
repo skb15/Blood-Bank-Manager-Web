@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8 w-screen max-w-fit mx-auto">
+  <div class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
     <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
   </div>
 </template>
@@ -17,7 +17,7 @@ export default defineComponent({
     return {
       banks: [
         {
-          id: 2,
+          id: 1,
           tags: ["govt", "verified"],
           name: "Subhashgram General Hospital",
           address: "Subhasgram, Kolkata, West Bengal",
@@ -28,10 +28,10 @@ export default defineComponent({
             AB: { "+": 123, "-": 2 },
             O: { "+": 28, "-": 0 },
           },
-          lastUpdateDate: new Date(2022, 1, 27, 18, 28),
+          lastUpdate: new Date(2022, 1, 27, 18, 28),
         },
         {
-          id: 3,
+          id: 2,
           tags: ["govt", "verified"],
           name: "Baruipur S D Hospital",
           address: "Kulpi Road, Baruipur, Kolkata",
@@ -42,12 +42,12 @@ export default defineComponent({
             AB: { "+": 17, "-": 9 },
             O: { "+": 5, "-": 0 },
           },
-          lastUpdateDate: new Date(2022, 2, 3, 6, 49),
+          lastUpdate: new Date(2022, 2, 3, 6, 49),
         },
         {
-          id: 4,
+          id: 3,
           tags: ["govt", "verified"],
-          name: "Ramakrishna Mission Seva Pratishthan(Sishu Mangal)",
+          name: "Ramakrishna Mission Seva Pratishthan (Sishu Mangal)",
           address: "Sarat Bose Road, Hazra, Kalighat, Kolkata, West Bengal",
           pincode: 700029,
           stocks: {
@@ -56,7 +56,7 @@ export default defineComponent({
             AB: { "+": 5, "-": 0 },
             O: { "+": 3, "-": 1 },
           },
-          lastUpdateDate: new Date(2022, 2, 3, 8, 18),
+          lastUpdate: new Date(2022, 2, 3, 8, 18),
         },
       ],
     };
@@ -66,6 +66,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,400&display=swap");
+
 #app {
   font-family: "Poppins", sans-serif;
 }
