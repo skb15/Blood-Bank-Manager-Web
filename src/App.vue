@@ -1,12 +1,30 @@
 <template>
-  <div class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
+  <p v-if="banks.length == 0">No data found</p>
+  <div v-else class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
     <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
   </div>
+  <button @click="getBanks()">Get Data</button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import axios from "axios";
 import BloodBankCard from "./components/BloodBankCard.vue";
+
+interface Bank {
+  id: number;
+  tags: string[];
+  name: string;
+  address: string;
+  pincode: number;
+  stocks: {
+    A: { "+": number; "-": number };
+    B: { "+": number; "-": number };
+    AB: { "+": number; "-": number };
+    O: { "+": number; "-": number };
+  };
+  lastUpdate: Date;
+}
 
 export default defineComponent({
   name: "App",
@@ -30,36 +48,19 @@ export default defineComponent({
           },
           lastUpdate: new Date(2022, 1, 27, 18, 28),
         },
-        {
-          id: 2,
-          tags: ["govt", "verified"],
-          name: "Baruipur S D Hospital",
-          address: "Kulpi Road, Baruipur, Kolkata",
-          pincode: 700144,
-          stocks: {
-            A: { "+": 7, "-": 12 },
-            B: { "+": 0, "-": 0 },
-            AB: { "+": 17, "-": 9 },
-            O: { "+": 5, "-": 0 },
-          },
-          lastUpdate: new Date(2022, 2, 3, 6, 49),
-        },
-        {
-          id: 3,
-          tags: ["govt", "verified"],
-          name: "Ramakrishna Mission Seva Pratishthan (Sishu Mangal)",
-          address: "Sarat Bose Road, Hazra, Kalighat, Kolkata, West Bengal",
-          pincode: 700029,
-          stocks: {
-            A: { "+": 17, "-": 5 },
-            B: { "+": 13, "-": 0 },
-            AB: { "+": 5, "-": 0 },
-            O: { "+": 3, "-": 1 },
-          },
-          lastUpdate: new Date(2022, 2, 3, 8, 18),
-        },
       ],
     };
+  },
+  methods: {
+    getBanks() {
+      axios.get("http://127.0.0.1:5000/hospitals").then((res) => {
+        const data = [res.data[0], res.data[1], res.data[2]];
+        console.log(data);
+        this.banks.push(data[0]);
+        this.banks.push(data[1]);
+        this.banks.push(data[2]);
+      });
+    },
   },
 });
 </script>
