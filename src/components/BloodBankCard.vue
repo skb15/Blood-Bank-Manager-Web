@@ -143,7 +143,7 @@ export default defineComponent({
   props: ["info"],
   computed: {
     lastUpdate() {
-      return formatDistanceToNowStrict(new Date(), {
+      return formatDistanceToNowStrict(new Date(this.info.lastUpdate), {
         addSuffix: true,
       });
     },

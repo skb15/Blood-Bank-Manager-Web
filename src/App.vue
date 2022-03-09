@@ -1,9 +1,19 @@
 <template>
-  <p v-if="banks.length == 0">No data found</p>
-  <div v-else class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
-    <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
+  <div class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
+    <button
+      @click="getBanks()"
+      class="bg-red-600 text-white px-3 py-2 rounded-md"
+    >
+      Get Data
+    </button>
+    <p v-if="banks.length == 0">No data found</p>
+    <div
+      v-else
+      class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto"
+    >
+      <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
+    </div>
   </div>
-  <button @click="getBanks()">Get Data</button>
 </template>
 
 <script lang="ts">
@@ -35,7 +45,7 @@ export default defineComponent({
     return {
       banks: [
         {
-          id: 1,
+          id: 7,
           tags: ["govt", "verified"],
           name: "Subhashgram General Hospital",
           address: "Subhasgram, Kolkata, West Bengal",
@@ -46,7 +56,7 @@ export default defineComponent({
             AB: { "+": 123, "-": 2 },
             O: { "+": 28, "-": 0 },
           },
-          lastUpdate: new Date(2022, 1, 27, 18, 28),
+          lastUpdate: "2022-03-04T09:06:00.000Z",
         },
       ],
     };
@@ -54,11 +64,8 @@ export default defineComponent({
   methods: {
     getBanks() {
       axios.get("http://127.0.0.1:5000/hospitals").then((res) => {
-        const data = [res.data[0], res.data[1], res.data[2]];
-        console.log(data);
-        this.banks.push(data[0]);
-        this.banks.push(data[1]);
-        this.banks.push(data[2]);
+        /*   console.log(res.data); */
+        this.banks = this.banks.concat(res.data);
       });
     },
   },
