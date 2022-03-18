@@ -1,5 +1,5 @@
 <template>
-  <div class="grid p-4 m-2 rounded-lg border-2 border-slate-400/70">
+  <div class="grid p-4 rounded-lg border-2 border-slate-400/70">
     <div class="row-start-1 row-span-1 col-start-1 col-span-1 flex gap-2">
       <span
         class="

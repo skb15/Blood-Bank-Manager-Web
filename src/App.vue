@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
+  <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
     <SearchBar @search="search" />
-    <p>{{ this.banks.length }} Result Found</p>
-    <div class="flex flex-col gap-8 my-3 items-stretch max-w-fit mx-auto">
+    <p class="mt-4 mb-2">{{ this.banks.length }} Result Found</p>
+    <div class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
       <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
     </div>
   </div>
