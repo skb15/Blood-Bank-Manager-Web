@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
-    <SearchBar @search="search" />
-    <p class="mt-4 mb-2">{{ this.banks.length }} Result Found</p>
+    <SearchBar @search="getBanks" />
+    <p class="mt-16 mb-2">{{ this.banks.length }} Result Found</p>
     <div class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
       <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" />
     </div>
@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { defineComponent } from "vue";
 import BloodBankCard from "./components/BloodBankCard.vue";
 import SearchBar from "./components/SearchBar.vue";
@@ -40,9 +41,22 @@ export default defineComponent({
     };
   },
   methods: {
-    search(value: Bank[]) {
-      // console.log(value);
-      this.banks = value;
+    getBanks(value: { pincode: number; bloodGroup: string }) {
+      const params = new URLSearchParams();
+      if (value.pincode !== null) {
+        params.append("pincode", "" + value.pincode);
+      }
+
+      if (value.bloodGroup !== "") {
+        params.append("bloodGroup", "" + value.bloodGroup);
+      }
+
+      axios
+        .get(" http://127.0.0.1:5000/hospitals?" + params.toString())
+        .then((res: { data: Bank[] }) => {
+          /*   console.log(res.data); */
+          this.banks = [...res.data];
+        });
     },
   },
 });
