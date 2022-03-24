@@ -19,15 +19,13 @@
         {{ tag }}
       </span>
     </div>
-    <em
-      class="
+    <em class="
         row-start-1 row-span-1
         col-start-2 col-span-2
         justify-self-end
         text-xs
         md:text-sm
-      "
-    >
+      ">
       Last Updated : {{ lastUpdate }}
     </em>
     <div class="row-start-2 row-span-1 col-start-1 col-span-2 mt-3 mr-2">
@@ -35,12 +33,15 @@
         {{ info.name }}
       </h1>
       <h3 class="text-md md:text-lg max-w-fit">
-        <img class="inline-block" src="../assets/geo-alt-fill.svg" alt="Geo" />
+        <img
+          class="inline-block"
+          src="../assets/geo-alt-fill.svg"
+          alt="Geo"
+        />
         {{ info.address }}, {{ info.pincode }}
       </h3>
     </div>
-    <button
-      class="
+    <button class="
         row-start-2 row-span-1
         col-start-3 col-span-1
         justify-self-end
@@ -58,8 +59,7 @@
         shadow-md
         w-max
         h-max
-      "
-    >
+      ">
       <img
         class="inline-block mr-1"
         src="../assets/compass-fill.svg"
@@ -67,17 +67,14 @@
       />
       Get Direction
     </button>
-    <section
-      class="
+    <section class="
         row-start-3 row-span-1
         col-start-1 col-span-3
         mt-3
         border-t-2 border-dashed border-black/30
-      "
-    >
+      ">
       <h4 class="text-sm md:text-base font-bold my-2">Available Supplies :</h4>
-      <ul
-        class="
+      <ul class="
           text-base
           md:text-xl
           mt-2
@@ -86,8 +83,7 @@
           justify-around
           md:justify-between
           gap-4
-        "
-      >
+        ">
         <li
           class="flex flex-col w-1/3"
           v-for="stock in ['A', 'B', 'AB', 'O']"
@@ -97,8 +93,7 @@
             {{ stock }}
           </h4>
           <div class="flex gap-2">
-            <div
-              class="
+            <div class="
                 flex flex-col
                 bg-red-100
                 px-4
@@ -107,13 +102,11 @@
                 rounded-md
                 items-center
                 w-1/2
-              "
-            >
+              ">
               <span class="text-red-500 font-bold">+</span>
               <span>{{ info.stocks[stock]["+"] }}</span>
             </div>
-            <div
-              class="
+            <div class="
                 flex flex-col
                 bg-red-100
                 px-4
@@ -122,8 +115,7 @@
                 rounded-md
                 items-center
                 w-1/2
-              "
-            >
+              ">
               <span class="text-red-500 font-bold">-</span>
               <span>{{ info.stocks[stock]["-"] }}</span>
             </div>

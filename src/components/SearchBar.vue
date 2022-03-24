@@ -19,7 +19,6 @@
           w-full
         "
       />
-      <!-- This example requires Tailwind CSS v2.0+ -->
       <div class="absolute inline-block text-left right-24">
         <div>
           <button
@@ -47,7 +46,7 @@
               src="../assets/caret.svg"
               alt="caret"
               :class="{ '-rotate-90': !!group.length }"
-              class="w-6 h-6 transition-transform"
+              class="w-6 h-6 transition-transform ease-out duration-300"
             />
             {{ group }}
           </button>
@@ -98,9 +97,7 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
 import { defineComponent } from "vue";
-import { Bank } from "../App.vue";
 
 export default defineComponent({
   name: "SearchBar",
@@ -127,8 +124,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-input::before {
-  content: url("../assets/search.svg");
-}
 </style>
 
