@@ -104,7 +104,7 @@ export default defineComponent({
   data() {
     return {
       isDropdown: false,
-      pincode: null,
+      pincode: 700148,
       group: "",
     };
   },
@@ -114,7 +114,19 @@ export default defineComponent({
       this.isDropdown = false;
     },
     search() {
-      this.$emit("search", { pincode: this.pincode, bloodGroup: this.group });
+      if (this.pincode.toString().length === 6) {
+        this.$emit(
+          "search",
+          { pincode: this.pincode, bloodGroup: this.group },
+          { isError: false, errorMessage: "" }
+        );
+      } else {
+        this.$emit(
+          "search",
+          {},
+          { isError: true, errorMessage: "Wrong Pincode Entered!!!" }
+        );
+      }
     },
     toggleDropdown() {
       this.isDropdown = !this.isDropdown;

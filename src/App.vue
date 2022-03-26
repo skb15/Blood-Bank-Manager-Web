@@ -1,12 +1,16 @@
 <template>
   <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
     <SearchBar @search="getBanks" />
-    <p class="mt-16 mb-2">{{ this.banks.length }} Result Found</p>
+    <p v-if="isError" class="mt-16 mb-2 font-bold text-red-500">
+      {{ errorMessage }}
+    </p>
+    <p v-else class="mt-16 mb-2">{{ this.banks.length }} Result Found</p>
     <div class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
       <BloodBankCard
         v-for="bank in banks"
         :key="bank.id"
         :info="bank"
+        :group="bloodGroup"
       />
     </div>
   </div>
@@ -42,10 +46,21 @@ export default defineComponent({
   data() {
     return {
       banks: [] as Bank[],
+      isError: false,
+      errorMessage: "",
+      bloodGroup: "",
     };
   },
   methods: {
-    getBanks(value: { pincode: number; bloodGroup: string }) {
+    getBanks(
+      value: { pincode: number; bloodGroup: string },
+      error: { isError: boolean; errorMessage: string }
+    ) {
+      this.isError = error.isError;
+      this.errorMessage = error.errorMessage;
+      if (error.isError) {
+        return;
+      }
       const params = new URLSearchParams();
 
       if (value.pincode !== null) {
@@ -53,6 +68,7 @@ export default defineComponent({
       }
 
       if (value.bloodGroup !== "") {
+        this.bloodGroup = value.bloodGroup;
         params.append("bloodGroup", "" + value.bloodGroup);
       }
 
