@@ -1,10 +1,16 @@
 <template>
   <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
     <SearchBar @search="getBanks" />
-    <p v-if="isError" class="mt-16 mb-2 font-bold text-red-500">
-      {{ errorMessage }}
+    <p
+      v-if="!!error.length"
+      class="mt-16 mb-2 font-bold text-red-500"
+    >
+      {{ error }}
     </p>
-    <p v-else class="mt-16 mb-2">{{ this.banks.length }} Result Found</p>
+    <p
+      v-else
+      class="mt-16 mb-2"
+    >{{ this.banks.length }} Result Found</p>
     <div class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
       <BloodBankCard
         v-for="bank in banks"
@@ -18,24 +24,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import BloodBankCard from "./components/BloodBankCard.vue";
+import BloodBankCard, { Bank } from "./components/BloodBankCard.vue";
 import SearchBar from "./components/SearchBar.vue";
 import axios from "axios";
-
-export interface Bank {
-  id: number;
-  tags: string[];
-  name: string;
-  address: string;
-  pincode: number;
-  stocks: {
-    A: { "+": number; "-": number };
-    B: { "+": number; "-": number };
-    AB: { "+": number; "-": number };
-    O: { "+": number; "-": number };
-  };
-  lastUpdate: Date;
-}
 
 export default defineComponent({
   name: "App",
@@ -46,21 +37,19 @@ export default defineComponent({
   data() {
     return {
       banks: [] as Bank[],
-      isError: false,
-      errorMessage: "",
+      error: "",
       bloodGroup: "",
     };
   },
   methods: {
-    getBanks(
-      value: { pincode: number; bloodGroup: string },
-      error: { isError: boolean; errorMessage: string }
-    ) {
-      this.isError = error.isError;
-      this.errorMessage = error.errorMessage;
-      if (error.isError) {
+    getBanks(value: { error: string; pincode: number; bloodGroup: string }) {
+      this.banks = [];
+      this.error = value.error;
+
+      if (value.error.length) {
         return;
       }
+
       const params = new URLSearchParams();
 
       if (value.pincode !== null) {
@@ -73,7 +62,7 @@ export default defineComponent({
       }
 
       axios
-        .get(" http://127.0.0.1:5000/hospitals?" + params.toString())
+        .get("http://127.0.0.1:5000/hospitals?" + params.toString())
         .then((res: { data: Bank[] }) => {
           // console.log(res.data);
           this.banks = [...res.data];

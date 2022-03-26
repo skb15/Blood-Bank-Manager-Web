@@ -115,17 +115,13 @@ export default defineComponent({
     },
     search() {
       if (this.pincode.toString().length === 6) {
-        this.$emit(
-          "search",
-          { pincode: this.pincode, bloodGroup: this.group },
-          { isError: false, errorMessage: "" }
-        );
+        this.$emit("search", {
+          error: "",
+          pincode: this.pincode,
+          bloodGroup: this.group,
+        });
       } else {
-        this.$emit(
-          "search",
-          {},
-          { isError: true, errorMessage: "Wrong Pincode Entered!!!" }
-        );
+        this.$emit("search", { error: "Wrong Pincode Entered!!!" });
       }
     },
     toggleDropdown() {
