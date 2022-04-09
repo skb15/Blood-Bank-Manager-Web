@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 left-0 right-0 bg-white px-2 py-4">
+  <div class="bg-white px-2 py-4">
     <div class="flex gap-4 relative max-w-full md:max-w-xl mx-auto">
       <img
         src="../assets/search.svg"
