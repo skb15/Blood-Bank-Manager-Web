@@ -8,7 +8,7 @@
       />
       <input
         @keypress.enter="search()"
-        v-model="pincode"
+        v-model="searchTerm"
         type="text"
         class="
           pl-12
@@ -104,6 +104,9 @@ export default defineComponent({
   data() {
     return {
       isDropdown: false,
+      searchTerm: "",
+      isSearchTypeName: true,
+      bloodBankName: "",
       pincode: 700148,
       group: "",
     };
@@ -114,14 +117,38 @@ export default defineComponent({
       this.isDropdown = false;
     },
     search() {
-      if (this.pincode.toString().length === 6) {
-        this.$emit("search", {
-          error: "",
-          pincode: this.pincode,
-          bloodGroup: this.group,
-        });
+      //this is checked by only the first digit/letter that it is a pincode or name
+      if (isNaN(parseInt(this.searchTerm)) === false) {
+        console.log("this is the pincode");
+        this.pincode = parseInt(this.searchTerm);
+        this.isSearchTypeName = false;
       } else {
-        this.$emit("search", { error: "Wrong Pincode Entered!!!" });
+        console.log("this is the BloodBank Name");
+        this.bloodBankName = this.searchTerm;
+        this.isSearchTypeName = true;
+      }
+
+      if (this.isSearchTypeName === true) {
+        if (this.bloodBankName.length > 0) {
+          this.$emit("search", {
+            error: "",
+            isSearchTypeName: this.isSearchTypeName,
+            bloodBankName: this.bloodBankName,
+          });
+        } else {
+          this.$emit("search", { error: "Wrong Name Entered!!!" });
+        }
+      } else {
+        if (this.pincode.toString().length === 6) {
+          this.$emit("search", {
+            error: "",
+            isSearchTypeName: this.isSearchTypeName,
+            pincode: this.pincode,
+            bloodGroup: this.group,
+          });
+        } else {
+          this.$emit("search", { error: "Wrong Pincode Entered!!!" });
+        }
       }
     },
     toggleDropdown() {

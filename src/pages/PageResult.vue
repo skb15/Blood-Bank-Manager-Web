@@ -36,26 +36,40 @@ export default defineComponent({
       banks: [] as Bank[],
       error: "",
       bloodGroup: "",
+      bloodBankName: "",
     };
   },
   methods: {
-    getBanks(value: { error: string; pincode: number; bloodGroup: string }) {
+    getBanks(value: {
+      error: string;
+      isSearchTypeName: boolean;
+      bloodBankName: string;
+      pincode: number;
+      bloodGroup: string;
+    }) {
       this.banks = [];
       this.error = value.error;
 
       if (value.error.length) {
         return;
       }
+      console.log(value);
 
       const params = new URLSearchParams();
 
-      if (value.pincode !== null) {
-        params.append("pincode", "" + value.pincode);
-      }
-
-      if (value.bloodGroup !== "") {
-        this.bloodGroup = value.bloodGroup;
-        params.append("bloodGroup", "" + value.bloodGroup);
+      if (value.isSearchTypeName === false) {
+        if (value.pincode !== null) {
+          params.append("pincode", "" + value.pincode);
+        }
+        if (value.bloodGroup !== "") {
+          this.bloodGroup = value.bloodGroup;
+          params.append("bloodGroup", "" + value.bloodGroup);
+        }
+      } else {
+        if (value.bloodBankName !== undefined) {
+          this.bloodBankName = value.bloodBankName;
+          params.append("name", "" + value.bloodBankName);
+        }
       }
 
       axios
