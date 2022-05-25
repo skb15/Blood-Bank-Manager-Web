@@ -1,7 +1,11 @@
 <template>
   <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
     <div class="fixed top-0 left-0 right-0">
-      <SearchBar @search="getBanks" />
+      <SearchBar
+        @search="getBanks"
+        :term="pincode || bloodBankName"
+        :blood="bloodGroup"
+      />
     </div>
     <p v-if="!!error.length" class="mt-16 mb-2 font-bold text-red-500">
       {{ error }}
@@ -35,8 +39,9 @@ export default defineComponent({
     return {
       banks: [] as Bank[],
       error: "",
-      bloodGroup: "",
       bloodBankName: "",
+      pincode: 0,
+      bloodGroup: "",
     };
   },
   methods: {
@@ -79,6 +84,31 @@ export default defineComponent({
           this.banks = [...res.data];
         });
     },
+  },
+  beforeMount() {
+    const error = String(this.$route.query.error);
+    const isSearchTypeName = Boolean(
+      Number(this.$route.query.isSearchTypeName)
+    );
+    this.bloodBankName = String(this.$route.query.bloodBankName);
+    this.pincode = Number(this.$route.query.pincode);
+    this.bloodGroup = String(this.$route.query.bloodGroup);
+    if (this.bloodGroup) {
+      this.bloodGroup = "";
+    }
+    /*  const { bloodBankName, pincode, bloodGroup, isSearchTypeName, error } =
+      this.$route.query; */
+    const bloodBankName = this.bloodBankName;
+    const pincode = this.pincode;
+    const bloodGroup = this.bloodGroup;
+    console.log(this.bloodBankName, this.pincode, this.bloodGroup);
+    this.getBanks({
+      error,
+      isSearchTypeName,
+      bloodBankName,
+      pincode,
+      bloodGroup,
+    });
   },
 });
 </script>

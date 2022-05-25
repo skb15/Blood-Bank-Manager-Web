@@ -101,14 +101,15 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "SearchBar",
+  props: ["term", "blood"],
   data() {
     return {
       isDropdown: false,
-      searchTerm: "",
+      searchTerm: this.term || "",
       isSearchTypeName: true,
       bloodBankName: "",
       pincode: 700148,
-      group: "",
+      group: this.blood || "",
     };
   },
   methods: {
