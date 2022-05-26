@@ -1,5 +1,8 @@
 <template>
-  <div class="flex justify-center items-center w-screen h-screen">
+  <div
+    class="flex flex-col gap-16 justify-center items-center w-screen h-screen"
+  >
+    <img src="../assets/logo.svg" alt="logo" class="scale-150" />
     <SearchBar @search="getBanks" />
   </div>
 </template>

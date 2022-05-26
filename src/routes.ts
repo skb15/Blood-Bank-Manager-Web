@@ -1,9 +1,11 @@
-import Home from "./pages/PageIndex.vue"
-import Result from "./pages/PageResult.vue"
+import Home from "./pages/ClientHome.vue"
+import Result from "./pages/ClientResult.vue"
+import Dashboard from "./pages/AdminDashboard.vue"
 
 const routes = [
 	{ name: "home", path: "/", component: Home },
-	{ name: "result", path: "/search", component: Result }
+	{ name: "result", path: "/search", component: Result },
+	{ name: "dashboard", path: "/dashboard", component: Dashboard }
 ]
 
 export default routes
