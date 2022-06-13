@@ -1,19 +1,39 @@
 <template>
-  <div
-    class="flex flex-col gap-16 justify-center items-center w-screen h-screen"
-  >
-    <img src="../assets/logo.svg" alt="logo" class="scale-150" />
+  <main class="flex flex-col gap-10 items-center justify-center w-screen h-screen p-2">
+    <button @click="beforeLogin" class="
+          fixed
+          top-2
+          right-2
+          bg-red-500
+          px-8
+          py-2
+          text-white
+          rounded-lg
+          font-medium
+          border-2
+          hover:bg-white
+          hover:border-red-500
+          hover:text-red-500
+        ">
+      {{ isLoggedin ? 'Logout' : 'Login' }}
+    </button>
+    <img src="../assets/logo.svg" alt="logo" class="w-full max-w-sm" />
     <SearchBar @search="getBanks" />
-  </div>
+    <AppAuth v-if="isModelOpen" @login="afterLogin" />
+  </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import SearchBar from "../components/SearchBar.vue";
+import AppAuth from "../components/AppAuth.vue";
 
 export default defineComponent({
   name: "PageIndex",
-  components: { SearchBar },
+  components: { SearchBar, AppAuth },
+  data() {
+    return { isLoggedin: false, isModelOpen: false }
+  },
   methods: {
     getBanks(value: {
       error: string;
@@ -33,6 +53,17 @@ export default defineComponent({
         },
       });
     },
+    beforeLogin() {
+      if (!this.isLoggedin) {
+        this.isModelOpen = !this.isModelOpen
+      } else {
+        this.isLoggedin = !this.isLoggedin
+      }
+    },
+    afterLogin($isLoggedIn: boolean) {
+      this.isLoggedin = $isLoggedIn
+      this.isModelOpen = !$isLoggedIn
+    }
   },
 });
 </script>

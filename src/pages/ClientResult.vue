@@ -1,23 +1,14 @@
 <template>
   <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
     <div class="fixed top-0 left-0 right-0">
-      <SearchBar
-        @search="getBanks"
-        :term="pincode || bloodBankName"
-        :blood="bloodGroup"
-      />
+      <SearchBar @search="getBanks" :term="pincode || bloodBankName" :blood="bloodGroup" />
     </div>
     <p v-if="!!error.length" class="mt-16 mb-2 font-bold text-red-500">
       {{ error }}
     </p>
-    <p v-else class="mt-16 mb-2">{{ this.banks.length }} Result Found</p>
+    <p v-else class="mt-16 mb-2">{{ banks.length }} Result Found</p>
     <div class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
-      <BloodBankCard
-        v-for="bank in banks"
-        :key="bank.id"
-        :info="bank"
-        :group="bloodGroup"
-      />
+      <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" :group="bloodGroup" />
     </div>
   </div>
 </template>
@@ -58,8 +49,6 @@ export default defineComponent({
       if (value.error.length) {
         return;
       }
-      console.log(value);
-
       const params = new URLSearchParams();
 
       if (value.isSearchTypeName === false) {
@@ -79,9 +68,9 @@ export default defineComponent({
 
       axios
         .get("http://127.0.0.1:5000/hospitals?" + params.toString())
-        .then((res: { data: Bank[] }) => {
+        .then((response: { data: Bank[] }) => {
           // console.log(res.data);
-          this.banks = [...res.data];
+          this.banks = [...response.data];
         });
     },
   },

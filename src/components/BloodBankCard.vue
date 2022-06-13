@@ -1,10 +1,9 @@
 <template>
   <div class="grid p-4 rounded-lg border-2 border-slate-400/70">
     <div class="row-start-1 row-span-1 col-start-1 col-span-1 flex gap-2">
-      <span
-        class="
+      <span class="
           py-1
-          px-2
+          px-1
           border-2 border-red-500
           text-red-500 text-xs
           md:text-sm
@@ -12,10 +11,7 @@
           rounded-md
           uppercase
           h-max
-        "
-        v-for="tag in info.tags"
-        :key="tag"
-      >
+        " v-for="tag in info.tags" :key="tag">
         {{ tag }}
       </span>
     </div>
@@ -33,15 +29,12 @@
         {{ info.name }}
       </h1>
       <h3 class="text-md md:text-lg max-w-fit">
-        <img
-          class="inline-block"
-          src="../assets/geo-alt-fill.svg"
-          alt="Geo"
-        />
+        <img class="inline-block" src="../assets/geo-alt-fill.svg" alt="Geo" />
         {{ info.address }}, {{ info.pincode }}
       </h3>
     </div>
-    <button class="
+    <a :href="`https://www.google.com/maps/search/?api=1&query=${info.plusCode}&query_place_id=${info.placeID}`"
+      target="_blank" class="
         row-start-2 row-span-1
         col-start-3 col-span-1
         justify-self-end
@@ -60,13 +53,9 @@
         w-max
         h-max
       ">
-      <img
-        class="inline-block mr-1"
-        src="../assets/compass-fill.svg"
-        alt="Compass"
-      />
+      <img class="inline-block mr-1" src="../assets/compass-fill.svg" alt="Compass" />
       Get Direction
-    </button>
+    </a>
     <section class="
         row-start-3 row-span-1
         col-start-1 col-span-3
@@ -84,17 +73,12 @@
           md:justify-between
           gap-4
         ">
-        <li
-          class="flex flex-col w-1/3"
-          v-for="stock in ['A', 'B', 'AB', 'O']"
-          :key="stock"
-        >
+        <li class="flex flex-col w-1/3" v-for="stock in ['A', 'B', 'AB', 'O']" :key="stock">
           <h4 class="p-auto font-bold border-2 text-center rounded-md mb-2">
             {{ stock }}
           </h4>
           <div class="flex gap-2">
-            <div
-              class="
+            <div class="
                 flex flex-col
                 px-4
                 py-2
@@ -102,29 +86,23 @@
                 rounded-md
                 items-center
                 w-1/2
-              "
-              :class="[
+              " :class="[
                 highlight(stock + '+', info.stocks[stock]['+'])
                   ? 'bg-red-500'
                   : 'bg-red-100',
-              ]"
-            >
-              <span
-                class="font-bold"
-                :class="[
-                  highlight(stock + '+', info.stocks[stock]['+'])
-                    ? 'text-red-100'
-                    : 'text-red-500',
-                ]"
-              >+</span>
+              ]">
+              <span class="font-bold" :class="[
+                highlight(stock + '+', info.stocks[stock]['+'])
+                  ? 'text-red-100'
+                  : 'text-red-500',
+              ]">+</span>
               <span :class="[
-                  highlight(stock + '+', info.stocks[stock]['+'])
-                    ? 'text-red-100'
-                    : 'text-black',
-                ]">{{ info.stocks[stock]["+"] }}</span>
+                highlight(stock + '+', info.stocks[stock]['+'])
+                  ? 'text-red-100'
+                  : 'text-black',
+              ]">{{ info.stocks[stock]["+"] }}</span>
             </div>
-            <div
-              class="
+            <div class="
                 flex flex-col
                 px-4
                 py-2
@@ -132,26 +110,21 @@
                 rounded-md
                 items-center
                 w-1/2
-              "
-              :class="[
+              " :class="[
                 highlight(stock + '-', info.stocks[stock]['-'])
                   ? 'bg-red-500'
                   : 'bg-red-100',
-              ]"
-            >
-              <span
-                class="font-bold"
-                :class="[
-                  highlight(stock + '-', info.stocks[stock]['-'])
-                    ? 'text-red-100'
-                    : 'text-red-500',
-                ]"
-              >-</span>
+              ]">
+              <span class="font-bold" :class="[
+                highlight(stock + '-', info.stocks[stock]['-'])
+                  ? 'text-red-100'
+                  : 'text-red-500',
+              ]">-</span>
               <span :class="[
-                  highlight(stock + '-', info.stocks[stock]['-'])
-                    ? 'text-red-100'
-                    : 'text-black',
-                ]">{{ info.stocks[stock]["-"] }}</span>
+                highlight(stock + '-', info.stocks[stock]['-'])
+                  ? 'text-red-100'
+                  : 'text-black',
+              ]">{{ info.stocks[stock]["-"] }}</span>
             </div>
           </div>
         </li>
@@ -181,6 +154,8 @@ export interface Bank {
   name: string;
   address: string;
   pincode: number;
+  plusCode: string;
+  placeID: string;
   stocks: {
     A: { "+": number; "-": number };
     B: { "+": number; "-": number };

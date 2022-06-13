@@ -1,19 +1,10 @@
 <template>
-  <div class="flex flex-col gap-6 w-[475px] mb-10">
-    <!-- v-for="rh in ['+', '-']"
+  <!-- v-for="rh in ['+', '-']"
       :key="rh" -->
-    <div
-      class="flex justify-between text-2xl font-medium text-red-500 pl-[24px]"
-    >
-      <span>{{ group }}{{ rh }}</span>
-      <span class="italic">{{ oldCount }}</span>
-      <input
-        type="number"
-        class="border-2 text-black w-36"
-        v-model="newCount"
-        @input="updateCount"
-      />
-    </div>
+  <div class="flex justify-between text-2xl font-medium text-red-500 pl-[24px]">
+    <span>{{ group }}{{ rh }}</span>
+    <span class="italic">{{ oldCount }}</span>
+    <input type="number" min="0" v-model="count" @input="updateCount" class="border-2 text-black w-36 text-center" />
   </div>
 </template>
 
@@ -22,22 +13,24 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BloodInput",
-  props: ["group", "rh", "oldCount"],
+  props: ["group", "rh", "oldCount", "newCount"],
   emits: ["update"],
   data() {
-    return {
-      newCount: 0,
-    };
+    return { count: 0 }
   },
   methods: {
     updateCount() {
-      console.log(this.group, this.newCount);
       this.$emit("update", {
         group: this.group,
         rh: this.rh,
-        newCount: this.newCount,
+        newCount: this.count,
       });
     },
+  },
+  watch: {
+    newCount() {
+      this.count = this.newCount
+    }
   },
 });
 </script>
