@@ -4,7 +4,13 @@
   <div class="flex justify-between text-2xl font-medium text-red-500 pl-[24px]">
     <span>{{ group }}{{ rh }}</span>
     <span class="italic">{{ oldCount }}</span>
-    <input type="number" min="0" v-model="count" @input="updateCount" class="border-2 text-black w-36 text-center" />
+    <input
+      type="number"
+      min="0"
+      v-model="count"
+      @input="updateCount"
+      class="border-2 text-black w-36 text-center"
+    />
   </div>
 </template>
 
@@ -16,7 +22,7 @@ export default defineComponent({
   props: ["group", "rh", "oldCount", "newCount"],
   emits: ["update"],
   data() {
-    return { count: 0 }
+    return { count: 0 };
   },
   methods: {
     updateCount() {
@@ -29,8 +35,8 @@ export default defineComponent({
   },
   watch: {
     newCount() {
-      this.count = this.newCount
-    }
+      this.count = this.newCount;
+    },
   },
 });
 </script>

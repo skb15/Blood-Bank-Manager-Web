@@ -1,8 +1,15 @@
 <template>
   <main class="relative px-10 py-2 flex flex-col gap-6">
+    <img
+      src="../assets/gray.jpg"
+      class="fixed -z-10 overflow-clip opacity-50"
+      alt=""
+    />
     <section class="flex items-center justify-between">
       <img src="../assets/logo.svg" alt="logo" class="w-56" />
-      <button @click="logout" class="
+      <button
+        @click="logout"
+        class="
           bg-red-500
           px-8
           py-2
@@ -10,10 +17,9 @@
           rounded-lg
           font-medium
           border-2
-          hover:bg-white
-          hover:border-red-500
-          hover:text-red-500
-        ">
+          hover:bg-white hover:border-red-500 hover:text-red-500
+        "
+      >
         Log out
       </button>
     </section>
@@ -27,58 +33,96 @@
         {{ address }}
       </h6>
     </section>
-    <section class="flex flex-col gap-8 ">
-      <span class="
-        inline-block
-        bg-red-100/60
-        text-red-500 text-xl
-        font-medium
-        py-3
-        px-6
-        max-w-full
-      ">Blood Supply Details</span>
+    <section class="flex flex-col gap-8">
+      <span
+        class="
+          inline-block
+          bg-red-100/60
+          text-red-500 text-xl
+          font-medium
+          py-3
+          px-6
+          max-w-full
+        "
+        >Blood Supply Details</span
+      >
       <div class="grid grid-cols-2 max-w-3xl md:mx-auto mx-6 gap-x-20 gap-y-10">
-        <div v-for="i in [0, 1]" :key="i" class="flex justify-between gap-10 text-lg pr-6 pl-2">
+        <div
+          v-for="i in [0, 1]"
+          :key="i"
+          class="flex justify-between gap-10 text-lg pr-6 pl-2"
+        >
           <span>Group</span>
           <span>Current</span>
           <span>your entry</span>
         </div>
-        <div v-for="group in ['A', 'AB', 'B', 'O']" :key="group" class="flex flex-col gap-10">
-          <BloodInput v-for="rh in ['+', '-']" :key="rh" :group="group" :rh="rh" :oldCount="stocks.old[group][rh]"
-            :newCount="stocks.new[group][rh]" @update="updateCount" />
+        <div
+          v-for="group in ['A', 'AB', 'B', 'O']"
+          :key="group"
+          class="flex flex-col gap-10"
+        >
+          <BloodInput
+            v-for="rh in ['+', '-']"
+            :key="rh"
+            :group="group"
+            :rh="rh"
+            :oldCount="stocks.old[group][rh]"
+            :newCount="stocks.new[group][rh]"
+            @update="updateCount"
+          />
         </div>
       </div>
-      <button @click="submitCount" class="
-          bg-red-500
+      <span
+        v-if="isShow"
+        class="
+          inline-block
+          text-green-500 text-xl
+          font-medium
+          text-center
+          py-0
+          px-6
+          max-w-full
+        "
+        >Thank You! blood stocks are successfully updated</span
+      >
+      <button
+        @click="
+          submitCount();
+          isShow = true;
+          setShow();
+        "
+        class="
+          bg-green-500
           px-12
           py-3
           text-white
           rounded
           font-medium
-          border-2
-          hover:bg-white
-          hover:border-red-500
-          hover:text-red-500
-        ">
+          w-52
+          mx-auto
+          shadow-xl
+          hover:shadow-green-500/50
+        "
+      >
         Update
       </button>
     </section>
-
   </main>
   <section>
-    <div class="
-          text-center
-          items-center
-          py-4
-          bg-slate-800
-          text-white
-          w-full
-          bottom-0
-          left-0
-        ">
-      <h4 class="text-lg inline mr-4">
-        contact us : 9825641245 | 7851151542
-      </h4>
+    <div
+      class="
+        text-center
+        items-center
+        py-4
+        bg-slate-800
+        text-white
+        w-full
+        absolute
+        bottom-0
+        left-0
+      "
+    >
+      <h4 class="text-lg inline mr-4">contact us : 9825641245 | 7851151542</h4>
       <h4 class="text-lg inline">Mail us : info@bloodbankmanager.com</h4>
       <p class="mt-2">This is a demo Website of Bloodbank manager</p>
     </div>
@@ -98,8 +142,8 @@ export default defineComponent({
   data() {
     return {
       id: 0,
-      name: '',
-      address: '',
+      name: "",
+      address: "",
       stocks: {
         old: {
           A: { "+": 0, "-": 0 },
@@ -112,11 +156,17 @@ export default defineComponent({
           B: { "+": 0, "-": 0 },
           AB: { "+": 0, "-": 0 },
           O: { "+": 0, "-": 0 },
-        }
-      }
+        },
+      },
+      isShow: false,
     };
   },
   methods: {
+    setShow() {
+      setTimeout(() => {
+        this.isShow = false;
+      }, 3000);
+    },
     updateCount(input: {
       group: "A" | "B" | "AB" | "O";
       rh: "+" | "-";
@@ -124,30 +174,38 @@ export default defineComponent({
     }) {
       this.stocks.new[input.group][input.rh] = input.newCount;
     },
+
     async submitCount() {
-      const response = await axios.put(`http://127.0.0.1:5000/stocks/${this.id}`, {
-        stock: this.stocks.new,
-        timestamp: formatISO(new Date())
-      })
+      const response = await axios.put(
+        `http://127.0.0.1:5000/stocks/${this.id}`,
+        {
+          stock: this.stocks.new,
+          timestamp: formatISO(new Date()),
+        }
+      );
 
       this.stocks.new = {
         A: { "+": 0, "-": 0 },
         B: { "+": 0, "-": 0 },
         AB: { "+": 0, "-": 0 },
         O: { "+": 0, "-": 0 },
-      }
-      this.stocks.old = response.data.stock
+      };
+      this.stocks.old = response.data.stock;
+      this.stocks.new = this.stocks.old;
     },
     logout() {
-      this.$router.replace('/')
-    }
+      this.$router.replace("/");
+    },
   },
   async beforeMount() {
-    this.id = Number(this.$route.query.id)
-    const response = await axios.get(`http://127.0.0.1:5000/hospitals/${this.id}`);
-    this.name = response.data.name
-    this.address = response.data.address
-    this.stocks.old = response.data.stocks
-  }
+    this.id = Number(this.$route.query.id);
+    const response = await axios.get(
+      `http://127.0.0.1:5000/hospitals/${this.id}`
+    );
+    this.name = response.data.name;
+    this.address = response.data.address;
+    this.stocks.old = response.data.stocks;
+    this.stocks.new = this.stocks.old;
+  },
 });
 </script>
