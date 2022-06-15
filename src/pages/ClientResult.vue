@@ -1,25 +1,15 @@
 <template>
-  <img src="../assets/gray.jpg" class="fixed -z-10 overflow-clip" alt="" />
-  <div class="flex flex-col my-3 items-stretch max-w-fit mx-auto">
-    <div class="fixed top-0 left-0 right-0">
-      <SearchBar
-        @search="getBanks"
-        :term="pincode || bloodBankName"
-        :blood="bloodGroup"
-      />
-    </div>
-    <p v-if="!!error.length" class="mt-16 mb-2 font-bold text-red-500">
+  <div class="flex flex-col py-3 items-stretch max-w-full h-screen">
+    <SearchBar @search="getBanks" :term="pincode || bloodBankName" :blood="bloodGroup" />
+    <p v-if="!!error.length" class="mx-auto my-2 px-4 w-full max-w-[625px] font-bold text-red-500">
       {{ error }}
     </p>
-    <p v-else class="mt-16 mb-2">{{ banks.length }} Result Found</p>
-    <div class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
-      <BloodBankCard
-        v-for="bank in banks"
-        :key="bank.id"
-        :info="bank"
-        :group="bloodGroup"
-      />
-    </div>
+    <p v-else class="mx-auto my-2 px-4 w-full max-w-[625px]">{{ banks.length }} Result Found</p>
+    <ul class="overflow-y-scroll">
+      <li class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
+        <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" :group="bloodGroup" />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -92,7 +82,7 @@ export default defineComponent({
     this.bloodBankName = String(this.$route.query.bloodBankName);
     this.pincode = Number(this.$route.query.pincode);
     this.bloodGroup = String(this.$route.query.bloodGroup);
-    if (this.bloodGroup) {
+    if (!this.bloodGroup) {
       this.bloodGroup = "";
     }
     /*  const { bloodBankName, pincode, bloodGroup, isSearchTypeName, error } =

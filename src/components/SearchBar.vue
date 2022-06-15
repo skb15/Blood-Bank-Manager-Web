@@ -6,7 +6,7 @@
           pl-12
           py-2
           pr-4
-          border-[2.5px] border-slate-600
+          border-2 border-slate-600
           rounded-md
           w-full
         " />
