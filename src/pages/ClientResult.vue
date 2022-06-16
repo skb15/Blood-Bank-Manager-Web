@@ -5,7 +5,7 @@
       {{ error }}
     </p>
     <p v-else class="mx-auto my-2 px-4 w-full max-w-[625px]">{{ banks.length }} Result Found</p>
-    <ul class="overflow-y-scroll">
+    <ul class="overflow-y-auto">
       <li class="flex flex-col gap-8 mb-3 items-stretch max-w-fit mx-auto">
         <BloodBankCard v-for="bank in banks" :key="bank.id" :info="bank" :group="bloodGroup" />
       </li>
@@ -21,7 +21,7 @@ import BloodBankCard, { Bank } from "../components/BloodBankCard.vue";
 import SearchBar from "../components/SearchBar.vue";
 
 export default defineComponent({
-  name: "App",
+  name: "ClientResult",
   components: {
     BloodBankCard,
     SearchBar,
@@ -36,7 +36,7 @@ export default defineComponent({
     };
   },
   methods: {
-    getBanks(value: {
+    searchBanks(value: {
       error: string;
       isSearchTypeName: boolean;
       bloodBankName: string;
@@ -45,10 +45,13 @@ export default defineComponent({
     }) {
       this.banks = [];
       this.error = value.error;
+      this.bloodGroup = value.bloodGroup;
 
       if (value.error.length) {
         return;
       }
+
+      console.log(value.isSearchTypeName ? value.bloodBankName : value.pincode, value.bloodGroup);
       const params = new URLSearchParams();
 
       if (value.isSearchTypeName === false) {
@@ -56,7 +59,6 @@ export default defineComponent({
           params.append("pincode", "" + value.pincode);
         }
         if (value.bloodGroup !== "") {
-          this.bloodGroup = value.bloodGroup;
           params.append("bloodGroup", "" + value.bloodGroup);
         }
       } else {
@@ -69,43 +71,39 @@ export default defineComponent({
       axios
         .get("http://127.0.0.1:5000/hospitals?" + params.toString())
         .then((response: { data: Bank[] }) => {
-          // console.log(res.data);
           this.banks = [...response.data];
         });
     },
+    getBanks(value: {
+      error: string;
+      isSearchTypeName: boolean;
+      bloodBankName: string;
+      pincode: number;
+      bloodGroup: string;
+    }) {
+      this.searchBanks(value);
+      this.$router.replace({
+        name: "result",
+        query: {
+          error: value.error,
+          isSearchTypeName: Number(value.isSearchTypeName),
+          bloodBankName: value.bloodBankName,
+          pincode: value.pincode,
+          bloodGroup: value.bloodGroup,
+        },
+      });
+    },
   },
   beforeMount() {
-    const error = String(this.$route.query.error);
-    const isSearchTypeName = Boolean(
-      Number(this.$route.query.isSearchTypeName)
-    );
-    this.bloodBankName = String(this.$route.query.bloodBankName);
-    this.pincode = Number(this.$route.query.pincode);
-    this.bloodGroup = String(this.$route.query.bloodGroup);
-    if (!this.bloodGroup) {
-      this.bloodGroup = "";
+    const value = {
+      error: String(this.$route.query.error),
+      isSearchTypeName: Boolean(Number(this.$route.query.isSearchTypeName)),
+      bloodBankName: String(this.$route.query.bloodBankName),
+      pincode: Number(this.$route.query.pincode),
+      bloodGroup: (this.$route.query.bloodGroup == undefined ? "" : String(this.$route.query.bloodGroup))
     }
-    /*  const { bloodBankName, pincode, bloodGroup, isSearchTypeName, error } =
-      this.$route.query; */
-    const bloodBankName = this.bloodBankName;
-    const pincode = this.pincode;
-    const bloodGroup = this.bloodGroup;
-    console.log(this.bloodBankName, this.pincode, this.bloodGroup);
-    this.getBanks({
-      error,
-      isSearchTypeName,
-      bloodBankName,
-      pincode,
-      bloodGroup,
-    });
+
+    this.searchBanks(value);
   },
 });
 </script>
-
-<style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,400&display=swap");
-
-#app {
-  font-family: "Poppins", sans-serif;
-}
-</style>

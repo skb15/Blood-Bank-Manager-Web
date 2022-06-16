@@ -86,11 +86,9 @@ export default defineComponent({
     search() {
       //this is checked by only the first digit/letter that it is a pincode or name
       if (isNaN(parseInt(this.searchTerm)) === false) {
-        console.log("this is the pincode");
         this.pincode = parseInt(this.searchTerm);
         this.isSearchTypeName = false;
       } else {
-        console.log("this is the BloodBank Name");
         this.bloodBankName = this.searchTerm;
         this.isSearchTypeName = true;
       }
@@ -101,6 +99,7 @@ export default defineComponent({
             error: "",
             isSearchTypeName: this.isSearchTypeName,
             bloodBankName: this.bloodBankName,
+            bloodGroup: this.group
           });
         } else {
           this.$emit("search", { error: "Wrong Name Entered!!!" });
@@ -124,7 +123,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-</style>
-

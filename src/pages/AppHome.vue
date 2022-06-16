@@ -40,7 +40,7 @@ import SearchBar from "../components/SearchBar.vue";
 import AppAuth from "../components/AppAuth.vue";
 
 export default defineComponent({
-  name: "PageIndex",
+  name: "AppHome",
   components: { SearchBar, AppAuth },
   data() {
     return { isLoggedin: false, isModelOpen: false };
