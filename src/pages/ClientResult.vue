@@ -56,6 +56,7 @@ export default defineComponent({
 
       if (value.isSearchTypeName === false) {
         if (value.pincode !== null) {
+          this.pincode = value.pincode;
           params.append("pincode", "" + value.pincode);
         }
         if (value.bloodGroup !== "") {
@@ -69,7 +70,7 @@ export default defineComponent({
       }
 
       axios
-        .get("http://127.0.0.1:5000/hospitals?" + params.toString())
+        .get(`${process.env.VUE_APP_API_URL}/hospitals?${params.toString()}`)
         .then((response: { data: Bank[] }) => {
           this.banks = [...response.data];
         });
@@ -95,6 +96,8 @@ export default defineComponent({
     },
   },
   beforeMount() {
+    console.log("API URL: ", process.env.VUE_APP_API_URL);
+
     const value = {
       error: String(this.$route.query.error),
       isSearchTypeName: Boolean(Number(this.$route.query.isSearchTypeName)),

@@ -40,7 +40,7 @@ export default defineComponent({
 	},
 	methods: {
 		async authenticate() {
-			const response = await axios.post(`http://127.0.0.1:5000/users`, {
+			const response = await axios.post(`${process.env.VUE_APP_API_URL}/users`, {
 				username: this.username,
 				password: this.password
 			})

@@ -24,7 +24,7 @@
       ">
       {{ isLoggedin ? "Logout" : "Login" }}
     </button>
-    <img src="../assets/logo.svg" alt="logo" class="w-full max-w-sm" />
+    <img src="../assets/logo.svg" alt="logo" class="w-4/5 md:w-full max-w-sm" />
     <SearchBar @search="getBanks" />
     <AppAuth v-if="isModelOpen" @login="afterLogin" />
     <span class="text-center">

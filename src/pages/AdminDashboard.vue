@@ -136,7 +136,7 @@ export default defineComponent({
 
     async submitCount() {
       const response = await axios.put(
-        `http://127.0.0.1:5000/stocks/${this.id}`,
+        `${process.env.VUE_APP_API_URL}/stocks/${this.id}`,
         {
           stock: this.stocks.new,
           timestamp: formatISO(new Date()),
@@ -159,7 +159,7 @@ export default defineComponent({
   async beforeMount() {
     this.id = Number(this.$route.query.id);
     const response = await axios.get(
-      `http://127.0.0.1:5000/hospitals/${this.id}`
+      `${process.env.VUE_APP_API_URL}/hospitals/${this.id}`
     );
     this.name = response.data.name;
     this.address = response.data.address;
