@@ -2,6 +2,10 @@
 # blood-bank-manager
 ![Blood Bank Manager - blood-bank-manager netlify app](https://github.com/akshayxemo/Blood-Bank-Manager-Web/assets/83893825/a0cc0ab3-028d-4af0-b03c-842c029f1a53)
 
+
+## Presentation (PPT)
+[![Static Badge](https://img.shields.io/badge/PPT_link-Click_here-green)](https://docs.google.com/presentation/d/1CUNL_Qlk47M_wEHVmHhRnfHer6NV6qMm/edit?usp=sharing&ouid=103025631364064808415&rtpof=true&sd=true)
+
 ## Project setup
 ```
 npm install
