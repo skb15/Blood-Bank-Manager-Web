@@ -24,3 +24,13 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+![image](https://github.com/akshayxemo/Blood-Bank-Manager-Web/assets/83893825/f3e59e2a-119c-4d1d-ba7b-846e6b154389)
+![image](https://github.com/akshayxemo/Blood-Bank-Manager-Web/assets/83893825/150464d0-65ba-4179-95dc-26f6320b4b5f)
+![image](https://github.com/akshayxemo/Blood-Bank-Manager-Web/assets/83893825/b6d0dc65-feef-470d-a4ac-54571996072b)
+![image](https://github.com/akshayxemo/Blood-Bank-Manager-Web/assets/83893825/4c11eceb-f3d6-4d34-92b8-9da2801eb317)
+![image](https://github.com/akshayxemo/Blood-Bank-Manager-Web/assets/83893825/8681c303-0974-4c00-88e8-0f806767d663)
+
+
+
+
+
